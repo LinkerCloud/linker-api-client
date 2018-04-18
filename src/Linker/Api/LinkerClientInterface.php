@@ -20,6 +20,13 @@ interface LinkerClientInterface
     public function getOrders($limit = 10, $offset = 0, array $filters = [], $sortColumn = 'created_at', $sortDir = 'ASC');
 
     /**
+     * Get stocks list
+     *
+     * @return array
+     */
+    public function getStocks();
+
+    /**
      * Creates order
      *
      * @param OrderInterface $order

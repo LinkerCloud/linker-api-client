@@ -10,6 +10,7 @@ use Linker\Api\LinkerClientInterface;
 use Linker\Api\Model\Order;
 use Linker\Api\Model\OrderInterface;
 use Linker\Api\Model\OrderList;
+use Linker\Api\Model\StockList;
 
 class HttpApiClient implements LinkerClientInterface
 {
@@ -70,6 +71,19 @@ class HttpApiClient implements LinkerClientInterface
 
         $body = $response->getBody();
         return $this->serializer->deserialize($body, OrderList::class, 'json');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getStocks()
+    {
+        $endpoint = $this->endpoint . '/stocks?';
+
+        $response = $this->client->request('GET', $endpoint . '&apikey=' . $this->apiKey);
+
+        $body = $response->getBody();
+        return $this->serializer->deserialize($body, StockList::class, 'json');
     }
 
     /**
