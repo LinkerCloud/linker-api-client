@@ -5,7 +5,7 @@ namespace Linker\Api\Model;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
 
-class Stock
+class Stock implements StockInterface
 {
     /**
      * @var int
