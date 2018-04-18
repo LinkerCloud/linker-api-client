@@ -8,8 +8,8 @@ use JMS\Serializer\Annotation\Type;
 class StockList
 {
     /**
-     * @var \Linker\Api\Model\Order[]
-     * @Type("array<Linker\Api\Model\Order>")
+     * @var \Linker\Api\Model\Stock[]
+     * @Type("array<Linker\Api\Model\Stock>")
      */
     protected $items;
 

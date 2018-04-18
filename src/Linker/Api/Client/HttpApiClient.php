@@ -78,7 +78,7 @@ class HttpApiClient implements LinkerClientInterface
      */
     public function getStocks()
     {
-        $endpoint = $this->endpoint . '/stocks';
+        $endpoint = $this->endpoint . '/stocks?';
 
         $response = $this->client->request('GET', $endpoint . '&apikey=' . $this->apiKey);
 
