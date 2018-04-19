@@ -5,17 +5,17 @@ namespace Linker\Api\Model;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
 
-class Stock
+class Stock implements StockInterface
 {
     /**
-     * @var string
-     * @Type("string")
+     * @var int
+     * @Type("integer")
      */
     protected $id;
 
     /**
-     * @var string
-     * @Type("string")
+     * @var int
+     * @Type("integer")
      */
     protected $sku;
 
@@ -26,8 +26,8 @@ class Stock
     protected $finalSku;
 
     /**
-     * @var string
-     * @Type("string")
+     * @var int
+     * @Type("integer")
      */
     protected $ean;
 
@@ -44,14 +44,14 @@ class Stock
     protected $reserved;
 
     /**
-     * @var string
-     * @Type("string")
+     * @var int
+     * @Type("integer")
      */
     protected $free;
 
     /**
-     * @var string
-     * @Type("string")
+     * @var int
+     * @Type("integer")
      */
     protected $total;
 

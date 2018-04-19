@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use JMS\Serializer\SerializerInterface;
 use Linker\Api\Model\Order;
+use Linker\Api\Model\Stock;
 
 class ApiClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -36,6 +37,17 @@ class ApiClientTest extends \PHPUnit_Framework_TestCase
         $this->getFindExpectations($url, $expectedResult, Order::class);
 
         $result = $this->subject->findOrder($id);
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    public function testGetStocksReturnsSuccessResponse()
+    {
+        $url = $this->endpoint . '/stocks/';
+
+        $expectedResult = $this->createMock(Stock::class);
+        $this->getFindExpectations($url, $expectedResult, Stock::class);
+
+        $result = $this->subject->getStocks();
         $this->assertEquals($expectedResult, $result);
     }
 
