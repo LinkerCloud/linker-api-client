@@ -1,0 +1,22 @@
+language: php
+
+php:
+  - 7.0
+  - 7.1
+
+matrix:
+  fast_finish: true
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_install:
+  - wget http://getcomposer.org/composer.phar
+
+install: php -d memory_limit=-1 composer.phar install --no-interaction $COMPOSER_FLAGS
+
+script:
+  - phpunit --coverage-text
