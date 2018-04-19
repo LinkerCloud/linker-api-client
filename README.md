@@ -25,7 +25,21 @@ Get order list
     
 Get order 
 
-    $result = $client->getOrder('orderId);
+    $result = $client->getOrder('orderId');  
+      
+Create order 
+
+    $order = new Order();
+    $order->setClientOrderNumber('abcd');
+    $order->setOrderDate(new \DateTime());
+    $order->setCarrier('DHL');
+    $order->setDeliveryCountry('PL');
+    $order->setDeliveryPostCode('10-234');
+    $order->setDeliveryCity('Warsaw');
+    $order->setDeliveryStreet('Test Street');
+    $order->setDeliveryEmail('info@linker.shop');
+    $order->setDeliveryRecipient('Joh Snow');
+    $result = $this->subject->createOrder($order);
         
 Get stock list 
 
