@@ -1,8 +1,14 @@
 Linker API Client
 
+PHP Library to access Linker Public API.
+
+Build Status: [![Build Status](https://travis-ci.org/LinkerCloud/linker-api-client.svg?branch=master)](https://travis-ci.org/LinkerCloud/linker-api-client)
+
+## Installation
+
 Install 
     composer `require linker/api-client`
-        
+           
 Create instance
 
     use GuzzleHttp\Client;
@@ -18,11 +24,12 @@ Create instance
     $client = new HttpApiClient($client, $serializer, $uri, $apiKey);
     
     
+## Features
+    
 Get order list 
 
     $result = $client->getOrders();
 
-    
 Get order 
 
     $result = $client->getOrder('orderId');  
