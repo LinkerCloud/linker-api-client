@@ -2,6 +2,7 @@
 
 namespace Linker\Api\Model;
 
+use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
 
@@ -16,6 +17,7 @@ class Order implements OrderInterface
     /**
      * @var int
      * @Type("integer")
+     * @SerializedName("externalId")
      */
     protected $externalId;
 
@@ -28,6 +30,7 @@ class Order implements OrderInterface
     /**
      * @var int
      * @Type("integer")
+     * @SerializedName("depotId")
      */
     protected $depotId;
 
@@ -46,30 +49,35 @@ class Order implements OrderInterface
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("invoiceNumber")
      */
     protected $invoiceNumber;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("invoiceId")
      */
     protected $invoiceId;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("receiptFiscalNumber")
      */
     protected $receiptFiscalNumber;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("receiptFiscalId")
      */
     protected $receiptFiscalId;
 
     /**
      * @var string
      * @Type("string")
+     *
      */
     protected $goodsDispatchNumber;
 
@@ -82,6 +90,7 @@ class Order implements OrderInterface
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("clientOrderNumber")
      */
     protected $clientOrderNumber;
 
@@ -94,48 +103,56 @@ class Order implements OrderInterface
     /**
      * @var \DateTime
      * @Type("DateTime")
+     * @SerializedName("orderDate")
      */
     protected $orderDate;
 
     /**
      * @var \DateTime
      * @Type("DateTime")
+     * @SerializedName("executionDate")
      */
     protected $executionDate;
 
     /**
      * @var \DateTime
      * @Type("DateTime")
+     * @SerializedName("importDate")
      */
     protected $importDate;
 
     /**
      * @var float
      * @Type("float")
+     * @SerializedName("priceGross")
      */
     protected $priceGross;
 
     /**
      * @var float
      * @Type("float")
+     * @SerializedName("priceNet")
      */
     protected $priceNet;
 
     /**
      * @var float
      * @Type("float")
+     * @SerializedName("shipmentPrice")
      */
     protected $shipmentPrice;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("currencySymbol")
      */
     protected $currencySymbol;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("orderStatus")
      */
     protected $orderStatus;
 
@@ -160,168 +177,196 @@ class Order implements OrderInterface
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryCountry")
      */
     protected $deliveryCountry;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryPostCode")
      */
     protected $deliveryPostCode;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryCity")
      */
     protected $deliveryCity;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryStreet")
      */
     protected $deliveryStreet;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryCompany")
      */
     protected $deliveryCompany;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryRecipient")
      */
     protected $deliveryRecipient;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryRecipientLogin")
      */
     protected $deliveryRecipientLogin;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryPhone")
      */
     protected $deliveryPhone;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryEmail")
      */
     protected $deliveryEmail;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryPointName")
      */
     protected $deliveryPointName;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryPointAddress")
      */
     protected $deliveryPointAddress;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryPointPostcode")
      */
     protected $deliveryPointPostcode;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryPointCity")
      */
     protected $deliveryPointCity;
 
     /**
      * @var array
      * @Type("array")
+     * @SerializedName("deliveryConfiguration")
      */
     protected $deliveryConfiguration;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("paymentMethod")
      */
     protected $paymentMethod;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("billingFirstName")
      */
     protected $billingFirstName;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("billingLastName")
      */
     protected $billingLastName;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("billingCompany")
      */
     protected $billingCompany;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("billingVatId")
      */
     protected $billingVatId;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("billingCity")
      */
     protected $billingCity;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("billingPostCode")
      */
     protected $billingPostCode;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("billingStreet1")
      */
     protected $billingStreet1;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("billingStreet2")
      */
     protected $billingStreet2;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("billingState")
      */
     protected $billingState;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("billingCountry")
      */
     protected $billingCountry;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("billingPhone")
      */
     protected $billingPhone;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("billingEmail")
      */
     protected $billingEmail;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("billingCountryCode")
      */
     protected $billingCountryCode;
 
@@ -334,12 +379,14 @@ class Order implements OrderInterface
     /**
      * @var float
      * @Type("float")
+     * @SerializedName("codAmount")
      */
     protected $codAmount;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("codAccountNumber")
      */
     protected $codAccountNumber;
 
@@ -359,48 +406,56 @@ class Order implements OrderInterface
     /**
      * @Type("array")
      * @var array
+     * @SerializedName("externalDeliveryIds")
      */
     protected $externalDeliveryIds;
 
     /**
      * @Type("array")
      * @var array
+     * @SerializedName("externalDeliveryIdsCanceled")
      */
     protected $externalDeliveryIdsCanceled;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("integrationClientName")
      */
     protected $integrationClientName;
 
     /**
      * @var array
      * @Type("array")
+     * @SerializedName("statusHistory")
      */
     protected $statusHistory;
 
     /**
      * @var int
      * @Type("integer")
+     * @SerializedName("internalDeliveryMethod")
      */
     protected $internalDeliveryMethod;
 
     /**
      * @var int
      * @Type("integer")
+     * @SerializedName("deliveryMethodMap")
      */
     protected $deliveryMethodMap;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("returnDocumentsType")
      */
     protected $returnDocumentsType;
 
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryHour")
      */
     protected $deliveryHour;
 
@@ -427,6 +482,7 @@ class Order implements OrderInterface
     /**
      * @var \DateTime
      * @Type("DateTime")
+     * @SerializedName("deliveryDueDate")
      */
     protected $deliveryDueDate;
 
@@ -435,6 +491,7 @@ class Order implements OrderInterface
      *
      * @var string
      * @Type("string")
+     * @SerializedName("deliveryStatus")
      */
     protected $deliveryStatus;
 
@@ -443,6 +500,7 @@ class Order implements OrderInterface
      *
      * @var string
      * @Type("string")
+     * @SerializedName("packageType")
      */
     protected $packageType;
 
@@ -451,6 +509,7 @@ class Order implements OrderInterface
      *
      * @var integer
      * @Type("integer")
+     * @SerializedName("numberOfPackages")
      */
     protected $numberOfPackages;
 

@@ -89,7 +89,7 @@ class HttpApiClient implements LinkerClientInterface
     /**
      * {@inheritDoc}
      */
-    public function findOrder($id)
+    public function getOrder($id)
     {
         $endpoint = $this->endpoint . '/orders/' . $id;
         $options  = [
@@ -107,7 +107,19 @@ class HttpApiClient implements LinkerClientInterface
      */
     public function createOrder(OrderInterface $order)
     {
-        //TODO
+        $order->setOrigin('LinkerAPI');
+        $endpoint = $this->endpoint . '/orders?apikey=' . $this->apiKey;
+        $content  = $this->serializer->serialize($order, 'json');
+        $options  = [
+            'headers' => $this->headers,
+            'body'    => $content
+        ];
+        echo $content;
+        try {
+            return $this->client->request('POST', $endpoint, $options);
+        } catch (ServerException $e) {
+            throw new ApiException($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode(), $e);
+        }
     }
 
     /**
@@ -115,7 +127,19 @@ class HttpApiClient implements LinkerClientInterface
      */
     public function updateOrder($id, OrderInterface $order)
     {
-        //TODO
+        $endpoint = $this->endpoint . '/orders/' . $id . '?apikey=' . $this->apiKey;
+        $content  = $this->serializer->serialize($order, 'json');
+        $options  = [
+            'headers' => $this->headers,
+            'body'    => $content
+        ];
+
+        try {
+            return $response = $this->client->request('POST', $endpoint, $options);
+
+        } catch (ServerException $e) {
+            throw new ApiException($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode(), $e);
+        }
     }
 
 

@@ -19,4 +19,4 @@ before_install:
 install: php -d memory_limit=-1 composer.phar install --no-interaction $COMPOSER_FLAGS
 
 script:
-  - phpunit --coverage-text
+  - phpunit tests/unit --coverage-text

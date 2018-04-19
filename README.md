@@ -21,7 +21,12 @@ Create instance
 Get order list 
 
     $result = $client->getOrders();
+
     
+Get order 
+
+    $result = $client->getOrder('orderId);
+        
 Get stock list 
 
     $result = $client->getStocks();

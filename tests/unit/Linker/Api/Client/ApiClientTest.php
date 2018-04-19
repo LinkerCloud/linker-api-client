@@ -6,7 +6,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use JMS\Serializer\SerializerInterface;
 use Linker\Api\Model\Order;
-use Linker\Api\Model\Stock;
+use Linker\Api\Model\OrderList;
+use Linker\Api\Model\StockList;
 
 class ApiClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,7 +29,19 @@ class ApiClientTest extends \PHPUnit_Framework_TestCase
         $this->subject    = new HttpApiClient($this->client, $this->serializer, $this->endpoint, $apiKey);
     }
 
-    public function testFindChannelReturnsSuccessResponse()
+    public function testGetOrdersReturnsSuccessResponse()
+    {
+        $id  = 'id';
+        $url = $this->endpoint . '/orders?limit=10&offset=0&sortCol=created_at&sortDir=ASC&apikey=apikey';
+
+        $expectedResult = $this->createMock(OrderList::class);
+        $this->getFindExpectations($url, $expectedResult, OrderList::class);
+
+        $result = $this->subject->getOrders();
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    public function testGetOrderReturnsSuccessResponse()
     {
         $id  = 'id';
         $url = $this->endpoint . '/orders/' . $id;
@@ -36,16 +49,16 @@ class ApiClientTest extends \PHPUnit_Framework_TestCase
         $expectedResult = $this->createMock(Order::class);
         $this->getFindExpectations($url, $expectedResult, Order::class);
 
-        $result = $this->subject->findOrder($id);
+        $result = $this->subject->getOrder($id);
         $this->assertEquals($expectedResult, $result);
     }
 
     public function testGetStocksReturnsSuccessResponse()
     {
-        $url = $this->endpoint . '/stocks/';
+        $url = $this->endpoint . '/stocks?&apikey=apikey';
 
-        $expectedResult = $this->createMock(Stock::class);
-        $this->getFindExpectations($url, $expectedResult, Stock::class);
+        $expectedResult = $this->createMock(StockList::class);
+        $this->getFindExpectations($url, $expectedResult, StockList::class);
 
         $result = $this->subject->getStocks();
         $this->assertEquals($expectedResult, $result);

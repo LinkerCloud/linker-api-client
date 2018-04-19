@@ -46,10 +46,10 @@ interface LinkerClientInterface
     public function updateOrder($id, OrderInterface $order);
 
     /**
-     * Find Order data
+     * Get Order data
      *
      * @param string $id
      * @return OrderInterface
      */
-    public function findOrder($id);
+    public function getOrder($id);
 }
