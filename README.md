@@ -39,7 +39,7 @@ Create order
     $order->setDeliveryStreet('Test Street');
     $order->setDeliveryEmail('info@linker.shop');
     $order->setDeliveryRecipient('Joh Snow');
-    $result = $this->subject->createOrder($order);
+    $result = $client->createOrder($order);
         
 Get stock list 
 
