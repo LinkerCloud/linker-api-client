@@ -15,7 +15,7 @@ class Stock implements StockInterface
 
     /**
      * @var int
-     * @Type("integer")
+     * @Type("string")
      */
     protected $sku;
 
