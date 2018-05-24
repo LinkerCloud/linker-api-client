@@ -3,6 +3,7 @@
 namespace Linker\Api\Client;
 
 use GuzzleHttp\Client;
+use http\Env\Request;
 use JMS\Serializer\SerializerInterface;
 use GuzzleHttp\Exception\ServerException;
 
@@ -11,6 +12,7 @@ use Linker\Api\Model\Order;
 use Linker\Api\Model\OrderInterface;
 use Linker\Api\Model\OrderList;
 use Linker\Api\Model\StockList;
+use Linker\Api\Model\TrackingNumber;
 
 class HttpApiClient implements LinkerClientInterface
 {
@@ -143,4 +145,25 @@ class HttpApiClient implements LinkerClientInterface
     }
 
 
+    /**
+     * @param $id
+     * @param TrackingNumber $trackingNumber
+     * @return OrderInterface
+     * @throws ApiException
+     */
+    public function setTrackingNumber($id, TrackingNumber $trackingNumber)
+    {
+        $endpoint = $this->endpoint . '/orders/' . $id . '/trackingnumber?apikey=' . $this->apiKey;
+        $content  = $this->serializer->serialize($trackingNumber, 'json');
+        $options  = [
+            'headers' => $this->headers,
+            'body'    => $content
+        ];
+        echo $content;
+        try {
+            return $this->client->request('PUT', $endpoint, $options);
+        } catch (ServerException $e) {
+            throw new ApiException($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode(), $e);
+        }
+    }
 }

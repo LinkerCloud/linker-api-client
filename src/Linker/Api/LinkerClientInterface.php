@@ -3,7 +3,9 @@
 namespace Linker\Api;
 
 
+use http\Env\Request;
 use Linker\Api\Model\OrderInterface;
+use Linker\Api\Model\TrackingNumber;
 
 interface LinkerClientInterface
 {
@@ -52,4 +54,12 @@ interface LinkerClientInterface
      * @return OrderInterface
      */
     public function getOrder($id);
+
+    /**
+     * @param $id
+     * @param TrackingNumber $trackingNumber
+     * @return OrderInterface
+     */
+    public function setTrackingNumber($id, TrackingNumber $trackingNumber);
+
 }
