@@ -3,7 +3,6 @@
 namespace Linker\Api;
 
 
-use http\Env\Request;
 use Linker\Api\Model\OrderInterface;
 use Linker\Api\Model\TrackingNumber;
 
@@ -12,9 +11,9 @@ interface LinkerClientInterface
     /**
      * Get orders list
      *
-     * @param int    $limit
-     * @param int    $offset
-     * @param array  $filters
+     * @param int $limit
+     * @param int $offset
+     * @param array $filters
      * @param string $sortColumn
      * @param string $sortDir ASC|DESC
      * @return array
@@ -40,7 +39,7 @@ interface LinkerClientInterface
     /**
      * Updates order
      *
-     * @param string         $id
+     * @param string $id
      * @param OrderInterface $order
      *
      * @return mixed

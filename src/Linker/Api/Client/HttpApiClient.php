@@ -3,10 +3,8 @@
 namespace Linker\Api\Client;
 
 use GuzzleHttp\Client;
-use http\Env\Request;
 use JMS\Serializer\SerializerInterface;
 use GuzzleHttp\Exception\ServerException;
-
 use Linker\Api\LinkerClientInterface;
 use Linker\Api\Model\Order;
 use Linker\Api\Model\OrderInterface;
