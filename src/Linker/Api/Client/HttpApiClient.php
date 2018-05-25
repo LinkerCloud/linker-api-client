@@ -114,7 +114,6 @@ class HttpApiClient implements LinkerClientInterface
             'headers' => $this->headers,
             'body'    => $content
         ];
-        echo $content;
         try {
             return $this->client->request('POST', $endpoint, $options);
         } catch (ServerException $e) {
@@ -157,7 +156,6 @@ class HttpApiClient implements LinkerClientInterface
             'headers' => $this->headers,
             'body'    => $content
         ];
-        echo $content;
         try {
             return $this->client->request('PUT', $endpoint, $options);
         } catch (ServerException $e) {
