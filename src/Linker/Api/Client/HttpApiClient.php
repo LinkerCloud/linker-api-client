@@ -115,7 +115,8 @@ class HttpApiClient implements LinkerClientInterface
             'body'    => $content
         ];
         try {
-            return $this->client->request('POST', $endpoint, $options);
+            $response = $this->client->request('POST', $endpoint, $options);
+            return $this->serializer->deserialize((string)$response->getBody(), Order::class, 'json');
         } catch (BadResponseException $e) {
             throw new ApiException($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode(), $e);
         }
