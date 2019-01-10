@@ -4,7 +4,7 @@ namespace Linker\Api\Client;
 
 use GuzzleHttp\Client;
 use JMS\Serializer\SerializerInterface;
-use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\BadResponseException;
 use Linker\Api\LinkerClientInterface;
 use Linker\Api\Model\Order;
 use Linker\Api\Model\OrderInterface;
@@ -116,7 +116,7 @@ class HttpApiClient implements LinkerClientInterface
         ];
         try {
             return $this->client->request('POST', $endpoint, $options);
-        } catch (ServerException $e) {
+        } catch (BadResponseException $e) {
             throw new ApiException($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode(), $e);
         }
     }
@@ -136,7 +136,7 @@ class HttpApiClient implements LinkerClientInterface
         try {
             return $response = $this->client->request('POST', $endpoint, $options);
 
-        } catch (ServerException $e) {
+        } catch (BadResponseException $e) {
             throw new ApiException($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode(), $e);
         }
     }
@@ -158,7 +158,7 @@ class HttpApiClient implements LinkerClientInterface
         ];
         try {
             return $this->client->request('PUT', $endpoint, $options);
-        } catch (ServerException $e) {
+        } catch (BadResponseException $e) {
             throw new ApiException($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode(), $e);
         }
     }
