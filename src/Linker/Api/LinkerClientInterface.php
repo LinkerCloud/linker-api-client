@@ -4,6 +4,7 @@ namespace Linker\Api;
 
 
 use Linker\Api\Model\OrderInterface;
+use Linker\Api\Model\SupplierOrderInterface;
 use Linker\Api\Model\TrackingNumber;
 
 interface LinkerClientInterface
@@ -61,4 +62,42 @@ interface LinkerClientInterface
      */
     public function setTrackingNumber($id, TrackingNumber $trackingNumber);
 
+    /**
+     * Get supplier orders list
+     *
+     * @param int $limit
+     * @param int $offset
+     * @param array $filters
+     * @param string $sortColumn
+     * @param string $sortDir ASC|DESC
+     * @return array
+     */
+    public function getSupplierOrders($limit = 10, $offset = 0, array $filters = [], $sortColumn = 'created_at', $sortDir = 'ASC');
+
+    /**
+     * Creates supplier order
+     *
+     * @param SupplierOrderInterface $order
+     *
+     * @return mixed
+     */
+    public function createSupplierOrder(SupplierOrderInterface $order);
+
+    /**
+     * Updates supplier order
+     *
+     * @param string $id
+     * @param SupplierOrderInterface $order
+     *
+     * @return mixed
+     */
+    public function updateSupplierOrder($id, SupplierOrderInterface $order);
+
+    /**
+     * Get Supplier Order data
+     *
+     * @param string $id
+     * @return SupplierOrderInterface
+     */
+    public function getSupplierOrder($id);
 }
