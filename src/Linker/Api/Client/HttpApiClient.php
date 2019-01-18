@@ -11,6 +11,9 @@ use Linker\Api\Model\OrderInterface;
 use Linker\Api\Model\OrderList;
 use Linker\Api\Model\StockList;
 use Linker\Api\Model\TrackingNumber;
+use Linker\Api\Model\SupplierOrderInterface;
+use Linker\Api\Model\SupplierOrder;
+use Linker\Api\Model\SupplierOrderList;
 
 class HttpApiClient implements LinkerClientInterface
 {
@@ -163,4 +166,84 @@ class HttpApiClient implements LinkerClientInterface
             throw new ApiException($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode(), $e);
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSupplierOrders($limit = 10, $offset = 0, array $filters = [], $sortColumn = 'created_at', $sortDir = 'ASC')
+    {
+        if ($limit < 0) {
+            $limit = 10;
+        }
+
+        $query = '';
+        foreach ($filters as $key => $val) {
+            $query .= '&filters[' . $key . ']=' . $val;
+        }
+
+        $sortDir  = ($sortDir == 'ASC') ? 'ASC' : 'DESC';
+        $endpoint = $this->endpoint . '/supplierorders?limit=' . $limit .
+            '&offset=' . $offset . '&sortCol=' . $sortColumn . '&sortDir=' . $sortDir;
+
+        $response = $this->client->request('GET', $endpoint . '&apikey=' . $this->apiKey);
+
+        $body = $response->getBody();
+        return $this->serializer->deserialize($body, SupplierOrderList::class, 'json');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSupplierOrder($id)
+    {
+        $endpoint = $this->endpoint . '/supplierorders/' . $id;
+        $options  = [
+            'headers' => $this->headers
+        ];
+        $response = $this->client->request('GET', $endpoint . '?apikey=' . $this->apiKey, $options);
+
+        $body = $response->getBody();
+        return $this->serializer->deserialize($body, SupplierOrder::class, 'json');
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function createSupplierOrder(SupplierOrderInterface $order)
+    {
+        $endpoint = $this->endpoint . '/supplierorders?apikey=' . $this->apiKey;
+        $content  = $this->serializer->serialize($order, 'json');
+        $options  = [
+            'headers' => $this->headers,
+            'body'    => $content
+        ];
+        try {
+            $response = $this->client->request('POST', $endpoint, $options);
+            return $this->serializer->deserialize((string)$response->getBody(), SupplierOrder::class, 'json');
+        } catch (BadResponseException $e) {
+            throw new ApiException($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode(), $e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function updateSupplierOrder($id, SupplierOrderInterface $order)
+    {
+        $endpoint = $this->endpoint . '/supplierorders/' . $id . '?apikey=' . $this->apiKey;
+        $content  = $this->serializer->serialize($order, 'json');
+        $options  = [
+            'headers' => $this->headers,
+            'body'    => $content
+        ];
+
+        try {
+            return $response = $this->client->request('POST', $endpoint, $options);
+
+        } catch (BadResponseException $e) {
+            throw new ApiException($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode(), $e);
+        }
+    }
+
 }
