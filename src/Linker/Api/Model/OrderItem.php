@@ -33,7 +33,7 @@ class OrderItem implements OrderItemInterface
      * @Type("string")
      */
     protected $productVariantExternalId;
-    
+
     /**
      * @var string
      * @Type("string")
@@ -69,6 +69,12 @@ class OrderItem implements OrderItemInterface
      * @Type("string")
      */
     protected $sku;
+
+    /**
+     * @var string
+     * @Type("string")
+     */
+    protected $ean;
 
     /**
      * @var string
@@ -260,6 +266,23 @@ class OrderItem implements OrderItemInterface
     {
         $this->sku = $sku;
 
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEan()
+    {
+        return $this->ean;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setEan($ean)
+    {
+        $this->ean = $ean;
         return $this;
     }
 

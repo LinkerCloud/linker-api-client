@@ -121,6 +121,17 @@ interface OrderItemInterface
     /**
      * @return string
      */
+    public function getEan();
+
+    /**
+     * @param string $ean
+     * @return OrderItem
+     */
+    public function setEan($ean);
+
+    /**
+     * @return string
+     */
     public function getDescription();
 
     /**
