@@ -8,8 +8,9 @@ use JMS\Serializer\SerializerInterface;
 use Linker\Api\Model\Order;
 use Linker\Api\Model\OrderList;
 use Linker\Api\Model\StockList;
+use PHPUnit\Framework\TestCase;
 
-class ApiClientTest extends \PHPUnit_Framework_TestCase
+class ApiClientTest extends TestCase
 {
     /** @var \PHPUnit_Framework_MockObject_MockObject|Client */
     protected $client;

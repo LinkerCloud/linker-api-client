@@ -1,24 +1,23 @@
 {
   "name": "linker/api-client",
-  "description": "Linker API Client library",
+  "description": "Linker Cloud Fulfillment Platform API Client library",
   "type": "library",
   "keywords": [
     "Api",
     "Http",
     "Client",
-    "Linker"
+    "Linker Cloud Fulfillment Platform"
   ],
   "license": "MIT",
-  "website": "https://linker.shop",
   "require": {
-    "php": ">=5.6.0",
+    "php": ">=7.1.0",
     "guzzlehttp/guzzle": "~6.0",
     "myclabs/php-enum": "~1.2",
     "doctrine/common": "^2.5",
     "jms/serializer": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "~5.5"
+    "phpunit/phpunit": "~7.0"
   },
   "config": {
     "bin-dir": "bin"
@@ -29,8 +28,6 @@
     }
   },
   "autoload-dev": {
-    "psr-4": {
-      "": "tests/integration"
-    }
+    "psr-4": { "Linker\\Tests\\": "tests/" }
   }
 }

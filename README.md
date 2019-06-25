@@ -51,3 +51,7 @@ Create order
 Get stock list 
 
     $result = $client->getStocks();
+    
+## Testing
+Unit tests are in tests/unit you can run it by running following command
+`phpunit tests/unit`    
