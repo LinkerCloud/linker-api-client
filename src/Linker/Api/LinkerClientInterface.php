@@ -4,6 +4,7 @@ namespace Linker\Api;
 
 
 use Linker\Api\Model\OrderInterface;
+use Linker\Api\Model\ShipmentInterface;
 use Linker\Api\Model\SupplierOrderInterface;
 use Linker\Api\Model\TrackingNumber;
 
@@ -100,4 +101,12 @@ interface LinkerClientInterface
      * @return SupplierOrderInterface
      */
     public function getSupplierOrder($id);
+
+    /**
+     * Create shipment for selected order
+     *
+     * @param ShipmentInterface $shipment
+     * @return SupplierOrderInterface
+     */
+    public function createShipment(ShipmentInterface $shipment);
 }

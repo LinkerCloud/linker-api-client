@@ -9,11 +9,13 @@ use Linker\Api\LinkerClientInterface;
 use Linker\Api\Model\Order;
 use Linker\Api\Model\OrderInterface;
 use Linker\Api\Model\OrderList;
+use Linker\Api\Model\ShipmentInterface;
 use Linker\Api\Model\StockList;
 use Linker\Api\Model\TrackingNumber;
 use Linker\Api\Model\SupplierOrderInterface;
 use Linker\Api\Model\SupplierOrder;
 use Linker\Api\Model\SupplierOrderList;
+use Linker\Api\Model\Parcel;
 
 class HttpApiClient implements LinkerClientInterface
 {
@@ -246,4 +248,23 @@ class HttpApiClient implements LinkerClientInterface
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function createShipment(ShipmentInterface $shipment)
+    {
+        $endpoint = $this->endpoint . '/deliveries/packages?apikey=' . $this->apiKey;
+        $content  = $this->serializer->serialize($shipment, 'json');
+        $options  = [
+            'headers' => $this->headers,
+            'body'    => $content
+        ];
+
+        try {
+            $response = $this->client->request('POST', $endpoint, $options);
+            return $this->serializer->deserialize((string)$response->getBody(), 'array<Linker\Api\Model\Parcel>', 'json');
+        } catch (BadResponseException $e) {
+            throw new ApiException($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode(), $e);
+        }
+    }
 }
