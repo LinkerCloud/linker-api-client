@@ -70,7 +70,7 @@ class HttpApiClient implements LinkerClientInterface
 
         $sortDir  = ($sortDir == 'ASC') ? 'ASC' : 'DESC';
         $endpoint = $this->endpoint . '/orders?limit=' . $limit .
-            '&offset=' . $offset . '&sortCol=' . $sortColumn . '&sortDir=' . $sortDir;
+            '&offset=' . $offset . '&sortCol=' . $sortColumn . '&sortDir=' . $sortDir . $query;
 
         $response = $this->client->request('GET', $endpoint . '&apikey=' . $this->apiKey);
 
@@ -149,7 +149,7 @@ class HttpApiClient implements LinkerClientInterface
 
 
     /**
-     * @param $id
+     * @param                $id
      * @param TrackingNumber $trackingNumber
      * @return OrderInterface
      * @throws ApiException

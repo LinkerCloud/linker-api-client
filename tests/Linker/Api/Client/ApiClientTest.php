@@ -32,13 +32,24 @@ class ApiClientTest extends TestCase
 
     public function testGetOrdersReturnsSuccessResponse()
     {
-        $id  = 'id';
         $url = $this->endpoint . '/orders?limit=10&offset=0&sortCol=created_at&sortDir=ASC&apikey=apikey';
 
         $expectedResult = $this->createMock(OrderList::class);
         $this->getFindExpectations($url, $expectedResult, OrderList::class);
 
         $result = $this->subject->getOrders();
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    public function testGetOrdersWithCustomParamsReturnsSuccessResponse()
+    {
+        $url = $this->endpoint . '/orders?limit=11&offset=1&sortCol=updated_at&sortDir=DESC&filters[key1]=val1&filters[key2]=val2&apikey=apikey';
+
+        $expectedResult = $this->createMock(OrderList::class);
+        $this->getFindExpectations($url, $expectedResult, OrderList::class);
+
+        $filters = ['key1' => 'val1', 'key2' => 'val2'];
+        $result  = $this->subject->getOrders(11, 1, $filters, 'updated_at', 'DESC');
         $this->assertEquals($expectedResult, $result);
     }
 
