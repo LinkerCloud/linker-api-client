@@ -2,6 +2,7 @@
 
 namespace Linker\Api\Model;
 
+use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
 
 /**
@@ -205,6 +206,19 @@ class SupplierOrderItem implements SupplierOrderItemInterface
      */
     protected $sources;
 
+    /**
+     * @var int
+     * @Type("integer")
+     * @SerializedName("shipped_quantity")
+     */
+    protected $shippedQuantity;
+
+    /**
+     * @var int
+     * @Type("integer")
+     * @SerializedName("damaged_quantity")
+     */
+    protected $damagedQuantity;
 
     /**
      * @return int
@@ -742,5 +756,37 @@ class SupplierOrderItem implements SupplierOrderItemInterface
     public function setLotNumber($lotNumber)
     {
         $this->lotNumber = $lotNumber;
+    }
+
+    /**
+     * @return int
+     */
+    public function getShippedQuantity(): int
+    {
+        return $this->shippedQuantity;
+    }
+
+    /**
+     * @param int $shippedQuantity
+     */
+    public function setShippedQuantity(int $shippedQuantity): void
+    {
+        $this->shippedQuantity = $shippedQuantity;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDamagedQuantity(): int
+    {
+        return $this->damagedQuantity;
+    }
+
+    /**
+     * @param int $damagedQuantity
+     */
+    public function setDamagedQuantity(int $damagedQuantity): void
+    {
+        $this->damagedQuantity = $damagedQuantity;
     }
 }

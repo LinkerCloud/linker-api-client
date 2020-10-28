@@ -3,6 +3,7 @@
 namespace Linker\Api\Client;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use JMS\Serializer\SerializerInterface;
 use GuzzleHttp\Exception\BadResponseException;
 use Linker\Api\LinkerClientInterface;
@@ -55,24 +56,36 @@ class HttpApiClient implements LinkerClientInterface
     }
 
     /**
+     * @param ClientInterface $client
+     */
+    public function setClient(ClientInterface $client): void
+    {
+        $this->client = $client;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getOrders($limit = 10, $offset = 0, array $filters = [], $sortColumn = 'created_at', $sortDir = 'ASC')
     {
+        $options = [
+            'headers' => $this->headers
+        ];
+
         if ($limit < 0) {
             $limit = 10;
         }
 
-        $query = '';
+        $sortDir = ($sortDir == 'ASC') ? 'ASC' : 'DESC';
+
+        $query = '?limit=' . $limit . '&offset=' . $offset . '&sortCol=' . $sortColumn . '&sortDir=' . $sortDir;
         foreach ($filters as $key => $val) {
             $query .= '&filters[' . $key . ']=' . $val;
         }
 
-        $sortDir  = ($sortDir == 'ASC') ? 'ASC' : 'DESC';
-        $endpoint = $this->endpoint . '/orders?limit=' . $limit .
-            '&offset=' . $offset . '&sortCol=' . $sortColumn . '&sortDir=' . $sortDir . $query;
+        $endpoint = $this->endpoint . '/orders' . $query;
 
-        $response = $this->client->request('GET', $endpoint . '&apikey=' . $this->apiKey);
+        $response = $this->client->request('GET', $endpoint, $options);
 
         $body = $response->getBody();
         return $this->serializer->deserialize($body, OrderList::class, 'json');
@@ -81,11 +94,24 @@ class HttpApiClient implements LinkerClientInterface
     /**
      * {@inheritDoc}
      */
-    public function getStocks()
+    public function getStocks($limit = 100, $offset = 0, array $filters = [])
     {
-        $endpoint = $this->endpoint . '/stocks?';
+        $options = [
+            'headers' => $this->headers
+        ];
 
-        $response = $this->client->request('GET', $endpoint . '&apikey=' . $this->apiKey);
+        if ($limit < 0) {
+            $limit = 100;
+        }
+
+        $query = '?limit=' . $limit . '&offset=' . $offset;
+        foreach ($filters as $key => $val) {
+            $query .= '&filters[' . $key . ']=' . $val;
+        }
+
+        $endpoint = $this->endpoint . '/stocks' . $query;
+
+        $response = $this->client->request('GET', $endpoint, $options);
 
         $body = $response->getBody();
         return $this->serializer->deserialize($body, StockList::class, 'json');
@@ -112,8 +138,8 @@ class HttpApiClient implements LinkerClientInterface
      */
     public function createOrder(OrderInterface $order)
     {
-        $order->setOrigin('LinkerAPI');
-        $endpoint = $this->endpoint . '/orders?apikey=' . $this->apiKey;
+        $order->setOrigin($order->getOrigin() . '_LinkerAPI');
+        $endpoint = $this->endpoint . '/orders';
         $content  = $this->serializer->serialize($order, 'json');
         $options  = [
             'headers' => $this->headers,
@@ -132,7 +158,7 @@ class HttpApiClient implements LinkerClientInterface
      */
     public function updateOrder($id, OrderInterface $order)
     {
-        $endpoint = $this->endpoint . '/orders/' . $id . '?apikey=' . $this->apiKey;
+        $endpoint = $this->endpoint . '/orders/' . $id;
         $content  = $this->serializer->serialize($order, 'json');
         $options  = [
             'headers' => $this->headers,
@@ -147,16 +173,12 @@ class HttpApiClient implements LinkerClientInterface
         }
     }
 
-
     /**
-     * @param                $id
-     * @param TrackingNumber $trackingNumber
-     * @return OrderInterface
-     * @throws ApiException
+     * {@inheritDoc}
      */
     public function setTrackingNumber($id, TrackingNumber $trackingNumber)
     {
-        $endpoint = $this->endpoint . '/orders/' . $id . '/trackingnumber?apikey=' . $this->apiKey;
+        $endpoint = $this->endpoint . '/orders/' . $id . '/trackingnumber';
         $content  = $this->serializer->serialize($trackingNumber, 'json');
         $options  = [
             'headers' => $this->headers,
@@ -187,7 +209,7 @@ class HttpApiClient implements LinkerClientInterface
         $endpoint = $this->endpoint . '/supplierorders?limit=' . $limit .
             '&offset=' . $offset . '&sortCol=' . $sortColumn . '&sortDir=' . $sortDir;
 
-        $response = $this->client->request('GET', $endpoint . '&apikey=' . $this->apiKey);
+        $response = $this->client->request('GET', $endpoint);
 
         $body = $response->getBody();
         return $this->serializer->deserialize($body, SupplierOrderList::class, 'json');
@@ -202,7 +224,7 @@ class HttpApiClient implements LinkerClientInterface
         $options  = [
             'headers' => $this->headers
         ];
-        $response = $this->client->request('GET', $endpoint . '?apikey=' . $this->apiKey, $options);
+        $response = $this->client->request('GET', $endpoint, $options);
 
         $body = $response->getBody();
         return $this->serializer->deserialize($body, SupplierOrder::class, 'json');
@@ -214,7 +236,7 @@ class HttpApiClient implements LinkerClientInterface
      */
     public function createSupplierOrder(SupplierOrderInterface $order)
     {
-        $endpoint = $this->endpoint . '/supplierorders?apikey=' . $this->apiKey;
+        $endpoint = $this->endpoint . '/supplierorders';
         $content  = $this->serializer->serialize($order, 'json');
         $options  = [
             'headers' => $this->headers,
@@ -222,7 +244,7 @@ class HttpApiClient implements LinkerClientInterface
         ];
         try {
             $response = $this->client->request('POST', $endpoint, $options);
-            return $this->serializer->deserialize((string)$response->getBody(), SupplierOrder::class, 'json');
+            return $this->serializer->deserialize($response->getBody()->getContents(), SupplierOrder::class, 'json');
         } catch (BadResponseException $e) {
             throw new ApiException($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode(), $e);
         }
@@ -233,7 +255,7 @@ class HttpApiClient implements LinkerClientInterface
      */
     public function updateSupplierOrder($id, SupplierOrderInterface $order)
     {
-        $endpoint = $this->endpoint . '/supplierorders/' . $id . '?apikey=' . $this->apiKey;
+        $endpoint = $this->endpoint . '/supplierorders/' . $id;
         $content  = $this->serializer->serialize($order, 'json');
         $options  = [
             'headers' => $this->headers,
@@ -253,7 +275,7 @@ class HttpApiClient implements LinkerClientInterface
      */
     public function createShipment(ShipmentInterface $shipment)
     {
-        $endpoint = $this->endpoint . '/deliveries/packages?apikey=' . $this->apiKey;
+        $endpoint = $this->endpoint . '/deliveries/packages';
         $content  = $this->serializer->serialize($shipment, 'json');
         $options  = [
             'headers' => $this->headers,

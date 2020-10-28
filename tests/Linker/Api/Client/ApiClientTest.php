@@ -32,7 +32,7 @@ class ApiClientTest extends TestCase
 
     public function testGetOrdersReturnsSuccessResponse()
     {
-        $url = $this->endpoint . '/orders?limit=10&offset=0&sortCol=created_at&sortDir=ASC&apikey=apikey';
+        $url = $this->endpoint . '/orders?limit=10&offset=0&sortCol=created_at&sortDir=ASC';
 
         $expectedResult = $this->createMock(OrderList::class);
         $this->getFindExpectations($url, $expectedResult, OrderList::class);
@@ -43,7 +43,7 @@ class ApiClientTest extends TestCase
 
     public function testGetOrdersWithCustomParamsReturnsSuccessResponse()
     {
-        $url = $this->endpoint . '/orders?limit=11&offset=1&sortCol=updated_at&sortDir=DESC&filters[key1]=val1&filters[key2]=val2&apikey=apikey';
+        $url = $this->endpoint . '/orders?limit=11&offset=1&sortCol=updated_at&sortDir=DESC&filters[key1]=val1&filters[key2]=val2';
 
         $expectedResult = $this->createMock(OrderList::class);
         $this->getFindExpectations($url, $expectedResult, OrderList::class);
@@ -67,7 +67,7 @@ class ApiClientTest extends TestCase
 
     public function testGetStocksReturnsSuccessResponse()
     {
-        $url = $this->endpoint . '/stocks?&apikey=apikey';
+        $url = $this->endpoint . '/stocks?limit=100&offset=0';
 
         $expectedResult = $this->createMock(StockList::class);
         $this->getFindExpectations($url, $expectedResult, StockList::class);

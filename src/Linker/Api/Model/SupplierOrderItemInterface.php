@@ -338,4 +338,23 @@ interface SupplierOrderItemInterface
      */
     public function setLotNumber($lotNumber);
 
+    /**
+     * @return int
+     */
+    public function getShippedQuantity(): int;
+
+    /**
+     * @param int $shippedQuantity
+     */
+    public function setShippedQuantity(int $shippedQuantity);
+
+    /**
+     * @return int
+     */
+    public function getDamagedQuantity(): int;
+
+    /**
+     * @param int $damagedQuantity
+     */
+    public function setDamagedQuantity(int $damagedQuantity);
 }

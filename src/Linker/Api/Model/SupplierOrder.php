@@ -144,6 +144,7 @@ class SupplierOrder implements SupplierOrderInterface
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("order_status")
      */
     protected $orderStatus;
 
