@@ -21,7 +21,7 @@ class ApiClientTest extends TestCase
     /** @var HttpApiClient */
     protected $subject;
 
-    protected function setUp()
+    protected function setUp():void
     {
         $this->client     = $this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMock();
         $this->endpoint   = 'http://domain.tld/abc';
