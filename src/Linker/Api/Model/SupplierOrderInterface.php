@@ -2,6 +2,8 @@
 
 namespace Linker\Api\Model;
 
+use DateTime;
+
 /**
  * Interface SupplierOrderInterface
  *
