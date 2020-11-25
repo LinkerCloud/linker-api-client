@@ -5,6 +5,8 @@ namespace Linker\Api\Client;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use JMS\Serializer\SerializerInterface;
+use JMS\Serializer\Naming\CamelCaseNamingStrategy;
+use JMS\Serializer\SerializerBuilder;
 use GuzzleHttp\Exception\BadResponseException;
 use Linker\Api\LinkerClientInterface;
 use Linker\Api\Model\Order;
@@ -227,7 +229,10 @@ class HttpApiClient implements LinkerClientInterface
         $response = $this->client->request('GET', $endpoint, $options);
 
         $body = $response->getBody();
-        return $this->serializer->deserialize($body, SupplierOrder::class, 'json');
+        $serializer =  SerializerBuilder::create()->setPropertyNamingStrategy(
+            new CamelCaseNamingStrategy()
+        )->build();
+        return $serializer->deserialize($body, SupplierOrder::class, 'json');
 
     }
 
