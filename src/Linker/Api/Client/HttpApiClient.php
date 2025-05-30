@@ -233,8 +233,8 @@ class HttpApiClient implements LinkerClientInterface
         $object     = $this->serializer->deserialize($contents, SupplierOrder::class, 'json');
 
         $object->setDepotId($decodeJson['depot_id']);
-        $object->setCreatedAt(\DateTime::createFromFormat(\DateTime::RFC3339, $decodeJson['createdAt']));
-        $object->setUpdatedAt(\DateTime::createFromFormat(\DateTime::RFC3339, $decodeJson['updatedAt']));
+        $object->setCreatedAt(\DateTime::createFromFormat(\DateTime::RFC3339, $decodeJson['createdAt']??$decodeJson['created_at']));
+        $object->setUpdatedAt(\DateTime::createFromFormat(\DateTime::RFC3339, $decodeJson['updatedAt']??$decodeJson['updated_at']));
 
         return $object;
 
